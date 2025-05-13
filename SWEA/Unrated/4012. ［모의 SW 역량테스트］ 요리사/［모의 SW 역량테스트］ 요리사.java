@@ -10,7 +10,7 @@ public class Solution {
     static int result;
     static boolean[] isSelected;
     public static void main(String[] args) throws IOException {
-        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));    
         StringTokenizer st;
 
         int T=Integer.parseInt(br.readLine());
