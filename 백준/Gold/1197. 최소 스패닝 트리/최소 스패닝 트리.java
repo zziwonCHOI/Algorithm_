@@ -84,7 +84,5 @@ public class Main {
 		for(int i=0; i<v; i++) {
 			d[i]=1;
 		}
-		
 	}
-
 }
