@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
  
- 
 public class Main {
     static int R, C, T;
     static int[][] map;
@@ -18,7 +17,6 @@ public class Main {
         R = Integer.parseInt(s[0]);
         C = Integer.parseInt(s[1]);
         T = Integer.parseInt(s[2]);
- 
         map = new int[R][C];
         int num = 0;
         for (int i = 0; i < R; i++) {
@@ -37,6 +35,8 @@ public class Main {
         System.out.println(result + 2); // count()에서 공기청정기 값인 -1을 2번 더했으므로 2를 더해줍니다.
     }
  
+    
+   
     public static void findAir() {
         for (int i = 0; i < R; i++) {
             if (map[i][0] == -1) {
