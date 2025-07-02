@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.PriorityQueue;
  
 public class Main {
+    
     static int R, C, T;
     static int[][] map;
     static int[] up = {1, -1, 0, 0}, side = {0, 0, 1, -1};
@@ -29,6 +30,7 @@ public class Main {
         findAir(); // 공기청정기 위치를 찾아 airPos1, airPos2에 넣어줍니다.
         for (int i = 0; i < T; i++) {
             solve();
+            
         }
         int result = count(); // map의 배열 남아있는 먼지의 양을 계산해줍니다. 
  
