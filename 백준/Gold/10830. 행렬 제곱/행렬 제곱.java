@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+
 public class Main {
     static int n;
     static long b;
@@ -34,6 +35,7 @@ public class Main {
     static int[][] power(int[][] a, long B){
         if(B==1) return a;
 
+        
         //B를 절반으로 줄여서 계산
         int[][] half=power(a,B/2);
         half=multiply(half,half);
@@ -45,6 +47,7 @@ public class Main {
 
     static int[][] multiply(int[][] A, int[][] B){
         int[][] res=new int[n][n];
+        
         for(int i=0; i<n; i++){ //res의 행
             for(int j=0; j<n; j++){//res의 열
                 for(int k=0; k<n; k++){//곱셈/합산
