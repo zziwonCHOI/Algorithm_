@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
@@ -11,7 +12,6 @@ public class Main {
 
         int h=Integer.parseInt(st.nextToken());
         int w=Integer.parseInt(st.nextToken());
-
 
         int[] arr=new int[w];
         st=new StringTokenizer(br.readLine());
@@ -28,6 +28,7 @@ public class Main {
         for(int i=1; i<w; i++){
             leftMax[i]=Math.max(leftMax[i-1],arr[i]);
         }
+        
 
         rightMax[w-1]=arr[w-1];
         for(int i=w-2; i>=0; i--){
