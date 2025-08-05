@@ -9,6 +9,7 @@ function solution(n, edge) {
     const distance=new Array(n+1).fill(-1);
     distance[1]=0;
     
+    
     const queue=[1];
     while(queue.length>0){
         const cur=queue.shift();
