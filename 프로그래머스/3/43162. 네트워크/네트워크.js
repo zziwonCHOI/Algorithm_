@@ -1,7 +1,6 @@
 function solution(n, computers) {
     var answer = 0;
     const visited=new Array(n).fill(false);
-    let networkCnt=0;
     
     function dfs(node){
         visited[node]=true;
@@ -12,11 +11,12 @@ function solution(n, computers) {
         }
     }
     
+    
     for(let i=0; i<n; i++){
         if(!visited[i]){
             dfs(i);
-            networkCnt++;
+            answer++;
         }
     }
-    return networkCnt;
+    return answer;
 }
