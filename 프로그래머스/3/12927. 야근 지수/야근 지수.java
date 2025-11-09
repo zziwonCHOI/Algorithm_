@@ -1,7 +1,7 @@
 import java.util.*;
 class Solution {
     public long solution(int n, int[] works) {
-        long answer = 0;
+        long result = 0;
         PriorityQueue<Integer> pq=new PriorityQueue<>(Collections.reverseOrder());
         
         for(int i=0; i<works.length; i++){
@@ -18,8 +18,8 @@ class Solution {
         }
         
         for(int num:pq){
-            answer+=(long)(num*num);
+            result+=(long)(num*num);
         }
-        return answer;
+        return result;
     }
 }
