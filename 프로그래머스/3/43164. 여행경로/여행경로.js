@@ -1,5 +1,4 @@
 function solution(tickets) {
-    var answer = [];
     
     let m=new Map();
     //그래프 생성 
