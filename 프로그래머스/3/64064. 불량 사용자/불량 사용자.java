@@ -2,7 +2,7 @@ import java.util.*;
 
 class Solution {
     static List<List<String>> candidates=new ArrayList<>();
-    static Set<Set<String>> results=new HashSet<>();
+    static Set<Set<String>> result=new HashSet<>();
     
     public int solution(String[] user_id, String[] banned_id) {
         
@@ -16,7 +16,7 @@ class Solution {
         }
         
         dfs(0,new HashSet<>());
-        return results.size();
+        return result.size();
     }
     
     public static boolean isMatch(String ban, String user){
@@ -33,7 +33,7 @@ class Solution {
     
     public static void dfs(int idx, Set<String> cur){
         if(idx==candidates.size()){
-            results.add(new HashSet<>(cur));
+            result.add(new HashSet<>(cur));
             return;
         }
         
