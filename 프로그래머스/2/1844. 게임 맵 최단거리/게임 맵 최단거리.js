@@ -1,38 +1,32 @@
 function solution(maps) {
-    var answer = Number.MAX_SAFE_INTEGER;
-    let dx=[0,1,0,-1];
-    let dy=[1,0,-1,0];
-    let row=maps.length;
-    let col=maps[0].length;
+    const n=maps.length;
+    const m=maps[0].length;
     
-    const visited= Array.from({ length: row }, () => Array(col).fill(false));
+    const dx=[0,1,0,-1];
+    const dy=[1,0,-1,0];
     
-    function bfs(){
-        const queue=[];
-        queue.push([0,0,1]);
-        visited[0][0]=true;
+    const visited=Array.from({length:n},()=> Array(m).fill(false));
+    visited[0][0]=true;
+    
+    // x,y,distance
+    const queue=[[0,0,1]];
+    
+    while(queue.length>0){
+        const [x,y,dist]=queue.shift();
         
-        while(queue.length!==0){
-            const [x,y,dis]=queue.shift();
-            for(let k=0; k<4; k++){
-                let nx=x+dx[k];
-                let ny=y+dy[k];
-                
-                if(nx===row-1&&ny===col-1){
-                    answer=Math.min(answer,dis+1);
-                    break;
-                }
-                if(nx<0||ny<0||nx>=row||ny>=col) continue;
-                
-                if(maps[nx][ny]===0) continue;
-                
-                if(!visited[nx][ny]){
-                    visited[nx][ny]=true;
-                    queue.push([nx,ny,dis+1]);
-                }
-             }
+        if(x===n-1 && y===m-1){
+            return dist;
+        }
+        
+        for(let i=0; i<4; i++){
+            const nx=x+dx[i];
+            const ny=y+dy[i];
+            
+            if(nx<0||ny<0||nx>=n||ny>=m||visited[nx][ny]||maps[nx][ny]==0) continue;
+            
+            visited[nx][ny]=true;
+            queue.push([nx,ny,dist+1]);
         }
     }
-    bfs();
-    return answer==Number.MAX_SAFE_INTEGER?-1:answer;
+    return -1;
 }
