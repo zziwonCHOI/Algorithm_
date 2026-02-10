@@ -2,18 +2,24 @@ import java.util.*;
 
 class Solution {
     public String solution(String[] participant, String[] completion) {
-        Map<String,Integer> map=new HashMap<String,Integer>();
+        String answer = "";
+        Map<String, Integer> map=new HashMap<>();
+        int n=participant.length;
         
-        for(String c:completion){
-            map.put(c,map.getOrDefault(c,0)+1);
+        for(int i=0 ;i<n; i++){
+            map.put(participant[i],map.getOrDefault(participant[i],0)+1);
         }
         
-        for(String p:participant){
-            if(!map.containsKey(p)||map.get(p)==0){
-                return p;
+        for(int i=0 ;i<completion.length; i++){
+            String cur=completion[i];
+            map.put(cur,map.get(cur)-1);
+        }
+        
+        for(String s:map.keySet()){
+            if(map.get(s)>=1){
+                answer=s;
             }
-            map.put(p,map.get(p)-1);
         }
-        return "";
+        return answer;
     }
 }
