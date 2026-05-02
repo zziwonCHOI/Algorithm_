@@ -1,50 +1,62 @@
 import java.util.*;
+
 class Solution {
+    static Map<String, String> inInfo;
+    static Map<String, Integer> totalTime;
+    static int defaultMin, defaultFee, addMin, addFee;
+
     public int[] solution(int[] fees, String[] records) {
-        Map<Integer, Integer> inTime=new HashMap<>();
-        Map<Integer, Integer> totalTime=new TreeMap<>();
-        int basicMin=fees[0];
-        int basicFee=fees[1];
-        int additionMin=fees[2];
-        int additionFee=fees[3];
-        
-        for(int i=0; i<records.length; i++){
-            String[] s=records[i].split(" ");
-            int car=Integer.parseInt(s[1]);
-            
-            String[] t=s[0].split(":");
-            int time=Integer.parseInt(t[0])*60+Integer.parseInt(t[1]);
-            
-            //IN인 경우는 입차시간 map에 저장하기 
-            if(s[2].equals("IN")){
-                inTime.put(car,time);
-            }else{
-                int start=inTime.get(car);
-                int duration=time-start;
-                
-                totalTime.put(car,totalTime.getOrDefault(car,0)+duration);
-                inTime.remove(car);
+        defaultMin = fees[0];
+        defaultFee = fees[1];
+        addMin = fees[2];
+        addFee = fees[3];
+
+        inInfo = new HashMap<>();
+        totalTime = new TreeMap<>();
+
+        for (int i = 0; i < records.length; i++) {
+            String[] s = records[i].split(" ");
+
+            String time = s[0];
+            String car = s[1];
+            String type = s[2];
+
+            if (type.equals("IN")) {
+                inInfo.put(car, time);
+            } else {
+                int t = calTime(time) - calTime(inInfo.get(car));
+                totalTime.put(car, totalTime.getOrDefault(car, 0) + t);
+                inInfo.remove(car);
             }
         }
-        //출차 기록이 없는 차량 관리
-        int endTime=23*60+59;
-        for(int car:inTime.keySet()){
-            int start=inTime.get(car);
-            int duration=endTime-start;
-            
-            totalTime.put(car,totalTime.getOrDefault(car,0)+duration);
+
+        // 출차 안된 차량
+        for (String car : inInfo.keySet()) {
+            int t = calTime("23:59") - calTime(inInfo.get(car));
+            totalTime.put(car, totalTime.getOrDefault(car, 0) + t);
         }
-        int[] answer=new int[totalTime.size()];
-        int i=0;
-        for(int time:totalTime.values()){
-            int fee=basicFee;
-            if(time>basicMin){
-                int extra=time-basicMin;
-                fee+=(int) Math.ceil((double)extra/additionMin)*additionFee;
+
+        // 요금 계산
+        int[] answer = new int[totalTime.size()];
+        int i = 0;
+
+        for (int time : totalTime.values()) {
+            if (time <= defaultMin) {
+                answer[i++] = defaultFee;
+            } else {
+                int extra = time - defaultMin;
+                int add = (int) Math.ceil((double) extra / addMin);
+                answer[i++] = defaultFee + add * addFee;
             }
-            answer[i++]=fee;
         }
-      
+
         return answer;
+    }
+
+    public static int calTime(String s) {
+        String[] t = s.split(":");
+        int h = Integer.parseInt(t[0]);
+        int m = Integer.parseInt(t[1]);
+        return h * 60 + m;
     }
 }
