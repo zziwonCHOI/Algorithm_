@@ -2,47 +2,43 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String today, String[] terms, String[] privacies) {
-        int[] answer = new int[privacies.length];
-        String[] t=today.split("\\.");
-        int year=Integer.parseInt(t[0]);
-        int month=Integer.parseInt(t[1]);
-        int day=Integer.parseInt(t[2]);
-        Map<String, Integer> map=new HashMap<>();
+        List<Integer> answer=new ArrayList<>();
         
-
-        for(String ter:terms){
-            String[] s=ter.split(" ");
-            map.put(s[0],Integer.parseInt(s[1]));
+        Map<String,Integer> termMap=new HashMap<>();
+        for(String t:terms){
+            String[] curTerm=t.split(" ");
+            termMap.put(curTerm[0],Integer.parseInt(curTerm[1]));
         }
         
-        int idx=0;
         for(int i=0; i<privacies.length; i++){
-            String[] s=privacies[i].split(" ");
-            String[] date=s[0].split("\\.");
-            
-            int limit=map.get(s[1]);
-            int y=Integer.parseInt(date[0]);
-            int m=Integer.parseInt(date[1]);
-            int d=Integer.parseInt(date[2]);
-            
-            m+=limit;
-            y+=(m-1)/12;
-            m=(m-1)%12+1;
-            
-            d-=1;
-            if(d==0){
-                d=28;
-                m-=1;
-                if(m==0){
-                    m=12;
-                    y-=1;
-                }
-            }
-           
-            if(year>y || (year==y&&month>m)||(year==y&&month==m&&day>d)){
-                answer[idx++]=i+1;
+            String[] split_p=privacies[i].split(" ");
+            String date=split_p[0];
+            String target=split_p[1];
+            int term=termMap.get(target);
+            if(!checkValid(today,date,term)){
+                answer.add(i+1);
             }
         }
-        return Arrays.copyOf(answer,idx);
+        return answer.stream().mapToInt(Integer::intValue).toArray();
+    }
+    
+    public static boolean checkValid(String today, String date, int term){
+        String[] today_=today.split("\\.");
+        int year_today=Integer.parseInt(today_[0]);
+        int month_today=Integer.parseInt(today_[1]);
+        int day_today=Integer.parseInt(today_[2]);
+        
+        String[] date_=date.split("\\.");
+        int year_date=Integer.parseInt(date_[0]);
+        int month_date=Integer.parseInt(date_[1]);
+        int day_date=Integer.parseInt(date_[2]);
+        
+        int calToday=year_today*12*28+month_today*28+day_today;
+        int calDate=year_date*12*28+month_date*28+day_date;
+        
+        if(calToday-calDate>=term*28){
+            return false;
+        }
+        return true;
     }
 }
