@@ -2,32 +2,31 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
+        List<Integer> answer=new LinkedList<>();
         int n=progresses.length;
-        int[] answer = new int[n];
-
-        int[] restTime=new int[n];
+                
+        Queue<Integer> q=new LinkedList<>();
+        
         for(int i=0; i<n; i++){
-            restTime[i] = (int) Math.ceil((100 - progresses[i]) / (double) speeds[i]);
+            int spendTime=100-progresses[i];
+            if(spendTime%speeds[i]!=0){
+                spendTime=spendTime/speeds[i]+1;
+            }else{
+                spendTime/=speeds[i];
+            }
+            q.add(spendTime);
         }
         
-        int idx=0;        
-        for(int i=0; i<n; i++){
-            int cnt=1;
-            boolean flag=false;
-            for(int j=i+1; j<n; j++){
-                if(restTime[i]>=restTime[j]){
-                    cnt++;
-                    flag=true;
-                }else{
-                    break;
-                }
+        while(!q.isEmpty()){
+            int cur=q.poll();
+            int oneDaySuccess=1;
+            while(!q.isEmpty()&&q.peek()<=cur){
+               oneDaySuccess++;
+               q.poll();
             }
-            answer[idx++]=cnt;
-            if(flag){
-                i+=cnt-1;
-            }
-            
+            answer.add(oneDaySuccess);
         }
-        return Arrays.copyOf(answer,idx);
+        
+        return answer.stream().mapToInt(Integer::intValue).toArray();
     }
 }
