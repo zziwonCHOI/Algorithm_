@@ -2,8 +2,10 @@ import java.util.*;
 
 class Solution {
     static int answer=0;
+    
     public int solution(int[] numbers, int target) {
-        dfs(numbers, target, 0,0);
+        
+        dfs(numbers,target,0,0);
         return answer;
     }
     
@@ -14,7 +16,6 @@ class Solution {
             }
             return;
         }
-        
         dfs(numbers, target, depth+1, sum+numbers[depth]);
         dfs(numbers, target, depth+1, sum-numbers[depth]);
     }
